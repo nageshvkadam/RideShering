@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 30px;
+        }
+
+        h2, h3 {
+            text-align: center;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .add-expense-btn {
+            margin: 0 auto;
+            display: block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+		.username {
+		    font-weight: bold;
+		    font-size: 16px;
+		    color: #333;
+		}
+
+
+        .logout-btn {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        table {
+            width: 100%;
+            background: #fff;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .message {
+            text-align: center;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="display:inline;">Dashboard</h2>
+
+    <div class="nav-container">
+		<div class="username" th:text="'Hello, ' + ${username}"></div>
+        <a class="add-expense-btn" th:href="@{/expense/add}">Add New Expense</a>
+       
+    </div>
+
+    <h3>Expense List</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Comments</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="expense : ${expenses}">
+                <td th:text="${expense.category}"></td>
+                <td th:text="${expense.amount}"></td>
+                <td th:text="${expense.comments}"></td>
+                <td th:text="${expense.createdAt}"></td>
+                <td th:text="${expense.updatedAt}"></td>
+                <td>
+                    <a th:href="@{'/expense/edit/' + ${expense.id}}" style="background-color: #f0f0f0; padding: 5px 10px; text-decoration: none; color: #333; border-radius: 4px;">Edit</a> |
+                    <a th:href="@{'/expense/delete/' + ${expense.id}}" style="background-color: #f0f0f0; padding: 5px 10px; text-decoration: none; color: #333; border-radius: 4px;">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Category-wise Expense Distribution</h3>
+    <canvas id="expenseChart" width="200" height="200"></canvas>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let categoryData = /*[[${categoryData}]]*/ {};
+        const labels = Object.keys(categoryData);
+        const data = Object.values(categoryData);
+
+        if (labels.length > 0 && data.length > 0) {
+            const ctx = document.getElementById("expenseChart").getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#66bb6a', '#ef5350']
+                    }]
+                }
+            });
+        } else {
+            document.getElementById("expenseChart").outerHTML = "<p class='message'>No category data available.</p>";
+        }
+        /*]]>*/
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Expense</title>
+    <style>
+        body {
+			
+            font-family: Arial, sans-serif;
+			background-image: url('https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg');
+						  background-size: cover;       
+						  background-repeat: no-repeat;           
+						     
+            padding: 40px;
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+            background-color: #fff;
+            padding: 30px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        input, textarea {
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        label {
+            font-weight: bold;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .nav-links {
+            margin-top: 20px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #007bff;
+        }
+		
+
+    </style>
+</head>
+<body>
+	
+  
+    <form th:action="@{${expense.id == null} ? '/expense/add' : '/expense/edit/' + ${expense.id}}" method="post" th:object="${expense}">
+		<h2 th:text="${expense.id == null} ? 'Add Expense' : 'Edit Expense'"></h2>
+        <label for="category">Category:</label>
+        <input type="text" th:field="*{category}" required />
+
+        <label for="amount">Amount:</label>
+        <input type="number" step="0.01" th:field="*{amount}" required />
+
+        <label for="comments">Comments:</label>
+        <textarea th:field="*{comments}" rows="3"></textarea>
+
+        <button type="submit">Save Expense</button>
+		<br>
+		<div class="nav-links">
+			<a th:href="@{/dashboard}">Back to Dashboard</a>
+		    </div>
+		
+    </form>
+    
+</body>
+</html>

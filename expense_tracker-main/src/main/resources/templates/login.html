@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <style>
+        body {
+			margin: 0;
+
+            font-family: Arial, sans-serif;
+            background-color: #f2f4f7;
+			background-image: url('https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg');
+			  background-size: cover;       
+			  background-repeat: no-repeat;  
+			 
+           
+            text-align: center;
+        }
+        form {
+            display: inline-block;
+            background-color: #fff;
+            padding: 25px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        input {
+            display: block;
+            margin: 15px auto;
+            padding: 10px;
+            width: 250px;
+        }
+        button {
+            padding: 10px 30px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .message {
+            margin-top: 20px;
+        }
+		header {
+		     background-color: rgb(128, 128, 64);
+		     color: white;
+		     padding: 15px 30px;
+		     display: flex;
+		     justify-content: space-between;
+		     align-items: center;
+		     flex-wrap: wrap;
+		   }
+
+		   .logo {
+		     font-size: 26px;
+		     font-weight: bold;
+		   }
+
+		  
+
+		  
+
+		   
+		   @media (max-width: 600px) {
+		     header {
+		       flex-direction: column;
+		       align-items: flex-start;
+		     }
+
+		    
+		   }
+
+
+		  footer {
+		    position: fixed;
+		    bottom: 0;
+		    left: 0;
+		    width: 100%;
+		    background-color:rgb(128, 128, 64);
+		    color: #333;
+		    padding:  15px 30px;
+		    text-align: center;
+		  }
+
+    </style>
+</head>
+
+<body>
+	
+	<header>
+	  <div class="logo">💰 Expense Tracker</div>
+	 
+	</header>
+
+    <h3>  </h3>
+	
+    <form th:action="@{/login}" method="post">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+		<p class="message" >Don't have an account? <a th:href="@{/signup}">Sign up</a></p>
+    </form>
+	<footer>
+	   <p>@ CopyRight ; 2025 Expense Tracker Application || Developed by Nagesh Kadam   </p>
+	 </footer>
+
+
+</body>
+</html>
